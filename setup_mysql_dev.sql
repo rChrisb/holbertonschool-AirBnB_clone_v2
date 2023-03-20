@@ -1,4 +1,3 @@
--- Write a script that prepares a MySQL server for the project:
 -- A database hbnb_dev_db
 -- A new user hbnb_dev (in localhost)
 -- The password of hbnb_dev should be set to hbnb_dev_pwd
