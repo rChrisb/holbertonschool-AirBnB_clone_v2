@@ -39,7 +39,7 @@ class DBStorage:
         else:
             for cls in [User, State, City, Amenity, Place, Review]:
                 if hasattr(cls, "__tablename__"):
-                    request += self.__session.query(cls).all()
+                    request += self.__session.query(globals()[cls]).all()
         return {f"{obj.__class__.__name__}.{obj.id}": obj
                 for obj in request}
 
