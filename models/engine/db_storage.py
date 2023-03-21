@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """DBStorage module"""
+from sqlalchemy import text
 from sqlalchemy import create_engine
 from os import getenv
 from sqlalchemy.orm import sessionmaker
@@ -24,22 +25,22 @@ class DBStorage:
         password = getenv("HBNB_MYSQL_PWD")
         host = getenv("HBNB_MYSQL_HOST")
         database = getenv("HBNB_MYSQL_DB")
-        self.__engine = create_engine(f"mysql+mysqldb://{user}:{password}@\
-            {host}/{database}", pool_pre_ping=True)
+        self.__engine = create_engine(
+            f"mysql+mysqldb://{user}:{password}@{host}/{database}",
+            pool_pre_ping=True)
         if getenv("HBNB_ENV") == "test":
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
+        request = []
         if cls is not None:
-            request = self.__session.query(cls).all()
+            cls = str(cls)
+            request = self.__session.query(globals()[cls]).all()
         else:
-            request = self.__session.query(User)
-            request += self.__session.query(State)
-            request += self.__session.query(City)
-            request += self.__session.query(Amenity)
-            request += self.__session.query(Place)
-            request += self.__session.query(Review)
-        return {f"{obj.to_dict()['__class__']}.{obj.id}": obj
+            for cls in [User, State, City, Amenity, Place, Review]:
+                if hasattr(cls, "__tablename__"):
+                    request += self.__session.query(cls).all()
+        return {f"{obj.__class__.__name__}.{obj.id}": obj
                 for obj in request}
 
     def new(self, obj):
