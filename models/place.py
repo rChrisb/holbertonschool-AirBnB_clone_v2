@@ -36,6 +36,8 @@ class Place(BaseModel, Base):
         "Amenity", secondary="place_amenity", viewonly=False)
 
     if getenv('HBNB_TYPE_STORAGE') != 'db':
+        amenity_ids = []
+
         @property
         def reviews(self):
             list_review = []
