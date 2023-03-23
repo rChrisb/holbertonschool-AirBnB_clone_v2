@@ -2,9 +2,12 @@
 """ Module for testing file storage"""
 import unittest
 from models.base_model import BaseModel
-from models import storage
 import os
 from os import getenv
+if getenv('HBNB_TYPE_STORAGE') != 'db':
+    from models import storage
+else:
+    from models import storage
 
 
 class test_fileStorage(unittest.TestCase):
