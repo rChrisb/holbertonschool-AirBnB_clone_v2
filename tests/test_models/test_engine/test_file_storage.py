@@ -104,7 +104,8 @@ class test_fileStorage(unittest.TestCase):
 
     def test_type_path(self):
         """ Confirm __file_path is string """
-        self.assertEqual(type(storage._FileStorage__file_path), str)
+        if getenv('HBNB_TYPE_STORAGE') != 'db':
+            self.assertEqual(type(storage._FileStorage__file_path), str)
 
     # def test_type_objects(self):
     #     """ Confirm __objects is a dict """
@@ -120,6 +121,7 @@ class test_fileStorage(unittest.TestCase):
 
     def test_storage_var_created(self):
         """ FileStorage object storage created """
-        from models.engine.file_storage import FileStorage
-        print(type(storage))
-        self.assertEqual(type(storage), FileStorage)
+        if getenv('HBNB_TYPE_STORAGE') != 'db':
+            from models.engine.file_storage import FileStorage
+            print(type(storage))
+            self.assertEqual(type(storage), FileStorage)
