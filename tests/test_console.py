@@ -14,9 +14,8 @@ class Test(unittest.TestCase):
         output = io.StringIO()
         sys.stdout = output
         console = HBNBCommand()
-        console.onecmd("create City id='hello_Antoine'\
-                       name=laval\
-                       state_id=00d8b06b-ce0c-48f9-b4b5-5abc905d9408")
+        console.onecmd("create State id='hello_Antoine'\
+                       name=laval")
         sys.stdout = sys.__stdout__
         expected_output = output.getvalue()
         self.assertIn("hello Antoine", expected_output)
