@@ -4,10 +4,14 @@ import unittest
 from models.base_model import BaseModel
 import os
 from os import getenv
-if getenv('HBNB_TYPE_STORAGE') != 'db':
-    from models import storage
+if getenv("HBNB_TYPE_STORAGE") == "db":
+    from models.engine.db_storage import DBStorage
+    storage = DBStorage()
+    storage.reload()
 else:
-    from models import storage
+    from models.engine.file_storage import FileStorage
+    storage = FileStorage()
+    storage.reload()
 
 
 class test_fileStorage(unittest.TestCase):
