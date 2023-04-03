@@ -2,6 +2,7 @@
 """ Hello Flask!"""
 
 from flask import Flask
+from markupsafe import escape
 
 app = Flask(__name__)
 
@@ -18,12 +19,12 @@ def hbnb():
 
 @app.route('/c/<text>', strict_slashes=False)
 def c_language(text):
-    return f"C {text.replace('_', ' ')}"
+    return f"C {escape(text.replace('_', ' '))}"
 
 
 @app.route('/python/<text>', strict_slashes=False)
 def python_language(text="is cool"):
-    return f"Python {text.replace('_', ' ')}"
+    return f"Python {escape(text.replace('_', ' '))}"
 
 
 if __name__ == '__main__':
