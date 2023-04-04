@@ -12,14 +12,12 @@ app = Flask(__name__)
 
 @app.route('/states_list', strict_slashes=False)
 def all_states():
-    """why is the checker doing this bro"""
     all_states = storage.all(State)
     return render_template("7-states_list.html", states=all_states)
 
 
 @app.teardown_appcontext
 def teardown_handle(app):
-    """why is the checker doing this bro"""
     storage.close()
 
 
