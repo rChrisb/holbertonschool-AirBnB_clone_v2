@@ -16,10 +16,9 @@ def teardown_handle(app):
 
 
 @app.route('/states_list', strict_slashes=False)
-def states_list():
-    states_list = sorted(
-        storage.all(State).values(), key=lambda state: state.name)
-    return render_template("7-states_list.html", states=states_list)
+def all_states():
+    all_states = storage.all(State)
+    return render_template("7-states_list.html", states=all_states)
 
 
 if __name__ == '__main__':
