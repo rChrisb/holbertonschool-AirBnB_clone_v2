@@ -17,7 +17,7 @@ def all_states():
     return render_template("8-cities_by_states.html", states=all_states)
 
 
-@app.route('/states/id', strict_slashes=False)
+@app.route('/states/<id>', strict_slashes=False)
 def states_by_id(id):
     for state in storage.all(State).values():
         if state.id == id:
