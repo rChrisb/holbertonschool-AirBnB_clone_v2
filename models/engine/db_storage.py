@@ -32,16 +32,26 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        request = []
+        # request = []
+        # if cls is not None:
+        #     cls = str(cls)
+        #     request = self.__session.query(globals()[cls]).all()
+        # else:
+        #     for cls in [User, State, City, Amenity, Place, Review]:
+        #         if hasattr(cls, "__tablename__"):
+        #             request += self.__session.query(globals()[cls]).all()
+        # return {f"{obj.__class__.__name__}.{obj.id}": obj
+        #         for obj in request}
+        dict = {}
         if cls is not None:
-            cls = str(cls)
-            request = self.__session.query(globals()[cls]).all()
+            request = self.__session.query(cls)
         else:
-            for cls in [User, State, City, Amenity, Place, Review]:
-                if hasattr(cls, "__tablename__"):
-                    request += self.__session.query(globals()[cls]).all()
-        return {f"{obj.__class__.__name__}.{obj.id}": obj
-                for obj in request}
+            request = self.__session.query(
+                State, City, User, Place, Review, Amenity)
+        for obj in request:
+            key = f"{obj.__class__.__name__}.{obj.id}"
+            dict[key] = obj
+        return dict
 
     def new(self, obj):
         self.__session.add(obj)
